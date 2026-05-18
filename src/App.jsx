@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import StartPageCard from "./components/ui/StartPageCard";
+import StartPage from "./pages/StartPage";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<StartPageCard />} />
+        <Route path="/" element={<StartPage />} />
       </Routes>
     </>
   );
