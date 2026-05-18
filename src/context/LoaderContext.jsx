@@ -2,14 +2,14 @@
 import { createContext, useState } from "react";
 import NeonLoader from "../components/ui/NeonLoader";
 
-export const LoderContext = createContext();
+export const LoaderContext = createContext();
 
 export default function LoaderProvider({ children }) {
   const [loading, setLoading] = useState(false);
   return (
-    <LoderContext.Provider value={{ loading, setLoading }}>
+    <LoaderContext.Provider value={{ loading, setLoading }}>
       {children}
       {loading && <NeonLoader />}
-    </LoderContext.Provider>
+    </LoaderContext.Provider>
   );
 }

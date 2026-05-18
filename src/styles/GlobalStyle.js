@@ -12,7 +12,7 @@ html,body,#root{
     min-height:100%;
 }
 html, body {
-font-family: "Inrer", sans-serif;
+font-family: "Inter", sans-serif;
 background: none;
 min-height:100vh;
 color:white;
