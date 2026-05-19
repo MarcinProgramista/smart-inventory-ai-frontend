@@ -14,6 +14,10 @@ export default function Register() {
   const errRef = useRef();
   const [success, setSuccess] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       {success ? (
@@ -32,6 +36,8 @@ export default function Register() {
           <ParagraphError ref={errRef} $errMsg={errMsg} aria-live="assertive">
             {errMsg}
           </ParagraphError>
+          <Title>Create your account</Title>
+          <form onSubmit={handleSubmit}></form>
         </NeonCard>
       )}
     </>
