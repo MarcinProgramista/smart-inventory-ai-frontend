@@ -1,19 +1,38 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useRef, useState } from "react";
+import NeonCard from "../components/ui/NeonCard";
+import Title from "../components/ui/typography/Title";
+import StyledLink from "../components/ui/buttons/StyledLink";
+import Button from "../components/ui/buttons/Button";
+import ButtonRow from "../components/layout/ButtonRow";
+import NeonUserIcon from "../components/icons/NeonUserIcon";
+import Logo from "../components/ui/Logo";
+import ParagraphError from "../components/ui/typography/ParagraphError";
 
 export default function Register() {
+  const userRef = useRef();
+  const errRef = useRef();
   const [success, setSuccess] = useState(false);
-
+  const [errMsg, setErrMsg] = useState("");
   return (
     <>
       {success ? (
-        <>
-          <h1>success</h1>
-        </>
+        <NeonCard>
+          <Title>Success!</Title>
+          <StyledLink to="/login">
+            <Button>Log In</Button>
+          </StyledLink>
+        </NeonCard>
       ) : (
-        <>
-          <h1>nor</h1>
-        </>
+        <NeonCard>
+          <ButtonRow>
+            <NeonUserIcon />
+            <Logo>SmartInventoryAI</Logo>
+          </ButtonRow>
+          <ParagraphError ref={errRef} $errMsg={errMsg} aria-live="assertive">
+            {errMsg}
+          </ParagraphError>
+        </NeonCard>
       )}
     </>
   );
