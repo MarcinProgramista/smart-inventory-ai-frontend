@@ -33,6 +33,10 @@ export default function Register() {
   useEffect(() => {
     setValidName(USER_REGEX.test(user));
   }, [user]);
+  useEffect(() => {
+    setvalidEmail(EMAIL_REGEX.test(email));
+  }, [email]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
