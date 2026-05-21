@@ -1,8 +1,14 @@
-import { faChain, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChain,
+  faInfoCircle,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import LabelWrapper from "../ui/LabelWrapper";
 import StyledFontAwesomeIconHidePasswordConfirm from "../ui/confirmPassword/StyledFontAwesomeIconHidePasswordConfirm";
 import StyledFontAwesomeIconInvalidPasswordConfirm from "../ui/confirmPassword/StyledFontAwesomeIconInvalidPasswordConfirm";
 import Input from "../common/Input";
+import ParagraphPasswordConfirm from "../ui/confirmPassword/ParagraphPasswordConfirm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const ConfirmPasswordField = ({
   validMatch,
   matchPwd,
@@ -37,6 +43,14 @@ const ConfirmPasswordField = ({
         onBlur={() => setMatchFocus(false)}
         placeholder="Put the same password like above.."
       />
+      <ParagraphPasswordConfirm
+        id="confirmnote"
+        $matchFocus={matchFocus}
+        $validMatch={validMatch}
+      >
+        <FontAwesomeIcon icon={faInfoCircle} />
+        Must match the first password input field.
+      </ParagraphPasswordConfirm>
     </>
   );
 };
