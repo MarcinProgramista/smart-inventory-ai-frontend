@@ -11,6 +11,7 @@ import Logo from "../components/ui/Logo";
 import ParagraphError from "../components/ui/typography/ParagraphError";
 import UsernameField from "../components/form/UsernameField";
 import EmailField from "../components/form/EmailField";
+import PasswordField from "../components/form/PasswordField";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -27,6 +28,14 @@ export default function Register() {
   const [validEmail, setvalidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
   const [success, setSuccess] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
@@ -36,6 +45,15 @@ export default function Register() {
   useEffect(() => {
     setvalidEmail(EMAIL_REGEX.test(email));
   }, [email]);
+
+  useEffect(() => {
+    setValidPwd(PWD_REGEX.test(pwd));
+    setValidMatch(pwd === matchPwd);
+  }, [pwd, matchPwd]);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd, email, matchPwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -75,6 +93,14 @@ export default function Register() {
               setEmailFocus={setEmailFocus}
               emailFocus={emailFocus}
               emailRef={emailRef}
+            />
+            <PasswordField
+              validPwd={validPwd}
+              pwd={pwd}
+              setPwd={setPwd}
+              setEmailFocus={setPwdFocus}
+              pwdFocus={pwdFocus}
+              setPwdFocus={setPwdFocus}
             />
           </form>
         </NeonCard>
