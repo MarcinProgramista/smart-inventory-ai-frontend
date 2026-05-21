@@ -16,6 +16,8 @@ import ConfirmPasswordField from "../components/form/ConfirmPasswordField";
 import RegisterButton from "../components/ui/buttons/RegisterButton";
 import SmallText from "../components/ui/typography/SmallText";
 import FeatureList from "../components/ui/lists/FeatureList";
+import API_CONFIG from "../config/api";
+import axios from "axios";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -61,6 +63,48 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // if button enabled with JS hack
+    const v1 = USER_REGEX.test(user);
+    const v2 = PWD_REGEX.test(pwd);
+    const v3 = EMAIL_REGEX.test(email);
+    if (!v1 || !v2 || !v3) {
+      setErrMsg("Invalid Entry");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.REGISTER}`,
+        JSON.stringify({
+          name: user,
+          password: pwd,
+          password2: matchPwd,
+          email: email,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        },
+      );
+      console.log(response?.data);
+      console.log(response?.accessToken);
+      console.log(JSON.stringify(response));
+      setSuccess(true);
+      //clear state and controlled inputs
+      //need value attrib on inputs for this
+      setUser("");
+      setPwd("");
+      setEmail("");
+      setMatchPwd("");
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 409) {
+        setErrMsg("Username Taken");
+      } else {
+        setErrMsg("Registration Failed");
+      }
+      errRef.current.focus();
+    }
   };
   return (
     <>
