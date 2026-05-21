@@ -12,6 +12,7 @@ import ParagraphError from "../components/ui/typography/ParagraphError";
 import UsernameField from "../components/form/UsernameField";
 import EmailField from "../components/form/EmailField";
 import PasswordField from "../components/form/PasswordField";
+import ConfirmPasswordField from "../components/form/ConfirmPasswordField";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -101,6 +102,13 @@ export default function Register() {
               setEmailFocus={setPwdFocus}
               pwdFocus={pwdFocus}
               setPwdFocus={setPwdFocus}
+            />
+            <ConfirmPasswordField
+              validMatch={validMatch}
+              matchPwd={matchPwd}
+              setMatchFocus={setMatchFocus}
+              setMatchPwd={setMatchPwd}
+              matchFocus={matchFocus}
             />
           </form>
         </NeonCard>
