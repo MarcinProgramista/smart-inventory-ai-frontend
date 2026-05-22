@@ -12,7 +12,9 @@ import Input from "../components/common/Input";
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("marcin@gmail.com");
+  const [pwd, setPwd] = useState("123456Mm!");
   const [errMsg, setErrMsg] = useState("");
 
   const handleSubmit = async (e) => {
@@ -40,6 +42,15 @@ const Login = () => {
             value={email}
             required
             placeholder="name@example.com"
+          />
+          <LabelWrapper htmlFor="password">Password:</LabelWrapper>
+          <Input
+            type="password"
+            id="password"
+            onChange={(e) => setPwd(e.target.value)}
+            value={pwd}
+            required
+            placeholder="put password"
           />
         </form>
       </NeonCard>
