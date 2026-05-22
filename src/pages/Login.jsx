@@ -6,11 +6,18 @@ import Logo from "../components/ui/Logo";
 import NeonCard from "../components/ui/NeonCard";
 import ParagraphError from "../components/ui/typography/ParagraphError";
 import Title from "../components/ui/typography/Title";
+import LabelWrapper from "../components/ui/LabelWrapper";
+import Input from "../components/common/Input";
 
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const [email, setEmail] = useState("marcin@gmail.com");
   const [errMsg, setErrMsg] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       <NeonCard>
@@ -22,6 +29,19 @@ const Login = () => {
           {errMsg}
         </ParagraphError>
         <Title>Log in</Title>
+        <form onSubmit={handleSubmit}>
+          <LabelWrapper htmlFor="email">Email:</LabelWrapper>
+          <Input
+            type="email"
+            id="email"
+            ref={userRef}
+            autoComplete="off"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+            placeholder="name@example.com"
+          />
+        </form>
       </NeonCard>
     </>
   );
