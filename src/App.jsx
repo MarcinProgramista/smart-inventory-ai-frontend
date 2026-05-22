@@ -3,6 +3,7 @@ import StartPage from "./pages/StartPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import RequireAuth from "./hooks/RequireAuth";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route element={<RequireAuth />}>
-          <Route path="/home" element={<h1>home</h1>} />
+          <Route path="/home" element={<Home />} />
         </Route>
       </Routes>
     </>
