@@ -8,6 +8,9 @@ import ParagraphError from "../components/ui/typography/ParagraphError";
 import Title from "../components/ui/typography/Title";
 import LabelWrapper from "../components/ui/LabelWrapper";
 import Input from "../components/common/Input";
+import SmallText from "../components/ui/typography/SmallText";
+import FeatureList from "../components/ui/lists/FeatureList";
+import RegisterButton from "../components/ui/buttons/RegisterButton";
 
 const Login = () => {
   const userRef = useRef();
@@ -52,7 +55,16 @@ const Login = () => {
             required
             placeholder="put password"
           />
+          <RegisterButton>Log in</RegisterButton>
         </form>
+        <SmallText>
+          Need account?<a href="/register"> Register</a>
+        </SmallText>
+        <FeatureList>
+          <li>✔ Track inventory in real time</li>
+          <li>✔ Predict shortages with AI</li>
+          <li>✔ Generate smart reports</li>
+        </FeatureList>
       </NeonCard>
     </>
   );
