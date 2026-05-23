@@ -3,6 +3,8 @@ const API_CONFIG = {
   ENDPOINTS: {
     REGISTER: "/api/register",
     LOGIN: "/api/auth/login",
+    LOGOUT: "/api/auth/logout",
+    REFRESH_TOKEN: "/api/auth/refresh_token",
   },
 };
 
