@@ -7,9 +7,9 @@ import LabelWrapper from "../ui/LabelWrapper";
 import StyledFontAwesomeIconHideName from "../ui/username/StyledFontAwesomeIconHideName";
 
 import Input from "../common/Input";
-import ParagraphUser from "../ui/username/ParagraphUser";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StyledFontAwesomeIconInvalidName from "../ui/username/StyledFontAwesomeIconInvalidName";
+import ValidationHint from "../ui/validation/ValidationHint";
 
 export default function UsernameField({
   user,
@@ -44,11 +44,10 @@ export default function UsernameField({
         onBlur={() => setUserFocus(false)}
         placeholder="Put name ..."
       />
-      <ParagraphUser
+      <ValidationHint
         id="uidnote"
-        $userFocus={userFocus}
-        $user={user}
-        $validName={validName}
+        $show={userFocus && user && !validName}
+        $fontSize="1.2rem"
       >
         <FontAwesomeIcon icon={faInfoCircle} />
         4 to 24 characters.
@@ -56,7 +55,7 @@ export default function UsernameField({
         Must begin with a letter.
         <br />
         Letters, numbers, underscores, hyphens allowed.
-      </ParagraphUser>
+      </ValidationHint>
     </>
   );
 }

@@ -8,7 +8,7 @@ import StyledFontAwesomeIconHideEmail from "../ui/email/StyledFontAwesomeIconHid
 import LabelWrapper from "../ui/LabelWrapper";
 import StyledFontAwesomeIconInvalidEmail from "../ui/email/StyledFontAwesomeIconInvalidEmail";
 import Input from "../common/Input";
-import ParagraphEmail from "../ui/email/ParagraphEmail";
+import ValidationHint from "../ui/validation/ValidationHint";
 export default function EmailField({
   email,
   setEmail,
@@ -45,12 +45,7 @@ export default function EmailField({
         onBlur={() => setEmailFocus(false)}
         placeholder="Put email .."
       />
-      <ParagraphEmail
-        id="uidnote"
-        $emailFocus={emailFocus}
-        $email={email}
-        $validEmail={validEmail}
-      >
+      <ValidationHint id="uidnote" $show={emailFocus && email && !validEmail}>
         <FontAwesomeIcon icon={faInfoCircle} />
         username part of the email, allowing alphanumeric characters and some
         special characters like ., _, %, +, and -.
@@ -63,7 +58,7 @@ export default function EmailField({
         <br />
         top-level domain (TLD), which must consist of at least 2 alphabetic
         characters.
-      </ParagraphEmail>
+      </ValidationHint>
     </>
   );
 }

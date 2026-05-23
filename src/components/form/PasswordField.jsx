@@ -7,8 +7,8 @@ import LabelWrapper from "../ui/LabelWrapper";
 import StyledFontAwesomeIconHidePassword from "../ui/password/StyledFontAwesomeIconHidePassword";
 import StyledFontAwesomeIconInvalidPassword from "../ui/password/StyledFontAwesomeIconInvalidPassword";
 import Input from "../common/Input";
-import ParagraphPassword from "../ui/password/ParagraphPassword";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ValidationHint from "../ui/validation/ValidationHint";
 
 const PasswordField = ({ validPwd, pwd, setPwd, setPwdFocus, pwdFocus }) => {
   return (
@@ -37,7 +37,7 @@ const PasswordField = ({ validPwd, pwd, setPwd, setPwdFocus, pwdFocus }) => {
         onBlur={() => setPwdFocus(false)}
         placeholder="Put password .."
       />
-      <ParagraphPassword id="pwdnote" $pwdFocus={pwdFocus} $validPwd={validPwd}>
+      <ValidationHint id="pwdnote" $show={pwdFocus && !validPwd}>
         <FontAwesomeIcon icon={faInfoCircle} />
         8 to 24 characters.
         <br />
@@ -49,7 +49,7 @@ const PasswordField = ({ validPwd, pwd, setPwd, setPwdFocus, pwdFocus }) => {
         <span aria-label="hashtag">#</span>{" "}
         <span aria-label="dollar sign">$</span>{" "}
         <span aria-label="percent">%</span>
-      </ParagraphPassword>
+      </ValidationHint>
     </>
   );
 };

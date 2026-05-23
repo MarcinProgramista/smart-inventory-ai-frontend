@@ -7,8 +7,8 @@ import LabelWrapper from "../ui/LabelWrapper";
 import StyledFontAwesomeIconHidePasswordConfirm from "../ui/confirmPassword/StyledFontAwesomeIconHidePasswordConfirm";
 import StyledFontAwesomeIconInvalidPasswordConfirm from "../ui/confirmPassword/StyledFontAwesomeIconInvalidPasswordConfirm";
 import Input from "../common/Input";
-import ParagraphPasswordConfirm from "../ui/confirmPassword/ParagraphPasswordConfirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ValidationHint from "../ui/validation/ValidationHint";
 const ConfirmPasswordField = ({
   validMatch,
   matchPwd,
@@ -43,14 +43,13 @@ const ConfirmPasswordField = ({
         onBlur={() => setMatchFocus(false)}
         placeholder="Put the same password like above.."
       />
-      <ParagraphPasswordConfirm
+      <ValidationHint
         id="confirmnote"
-        $matchFocus={matchFocus}
-        $validMatch={validMatch}
+        $show={matchFocus && matchPwd && !validMatch}
       >
         <FontAwesomeIcon icon={faInfoCircle} />
         Must match the first password input field.
-      </ParagraphPasswordConfirm>
+      </ValidationHint>
     </>
   );
 };
