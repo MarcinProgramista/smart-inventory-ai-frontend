@@ -1,4 +1,7 @@
-import { LogoutContainer } from "../components/dashboard/DashboardStyles";
+import {
+  DashboardWrapper,
+  LogoutContainer,
+} from "../components/dashboard/DashboardStyles";
 import Button from "../components/ui/buttons/Button";
 import axios from "axios";
 import AuthContext from "../context/AuthProvider";
@@ -29,6 +32,7 @@ export default function Home() {
         <Button onClick={handleLogout}>Log Out</Button>
       </LogoutContainer>
       <ScrollToTopButton />
+      <DashboardWrapper></DashboardWrapper>
     </>
   );
 }
