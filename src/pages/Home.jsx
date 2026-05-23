@@ -1,11 +1,11 @@
 import { LogoutContainer } from "../components/dashboard/DashboardStyles";
 import Button from "../components/ui/buttons/Button";
-import StyledLink from "../components/ui/buttons/StyledLink";
 import axios from "axios";
 import AuthContext from "../context/AuthProvider";
 import API_CONFIG from "../config/api";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import ScrollToTopButton from "../components/dashboard/ScrollToTopButton";
 
 export default function Home() {
   const { setAuth } = useContext(AuthContext);
@@ -28,6 +28,7 @@ export default function Home() {
       <LogoutContainer>
         <Button onClick={handleLogout}>Log Out</Button>
       </LogoutContainer>
+      <ScrollToTopButton />
     </>
   );
 }
