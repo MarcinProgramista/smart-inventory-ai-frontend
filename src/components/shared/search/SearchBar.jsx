@@ -27,11 +27,31 @@ const SearchBox = styled.div`
     height: 20px;
   }
 `;
+
+const Input = styled.input`
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #9deaff;
+  font-size: 1.05rem;
+  outline: none;
+  caret-color: #9deaff;
+
+  &::placeholder {
+    color: #9deaff;
+  }
+`;
 export default function SearchBar({ value, onChange, placeholder }) {
   return (
     <SearchWrapper>
       <SearchBox>
         <Search />
+        <Input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          type="text"
+        />
       </SearchBox>
     </SearchWrapper>
   );
