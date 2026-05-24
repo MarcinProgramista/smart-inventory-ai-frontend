@@ -15,3 +15,14 @@ export const DashboardWrapper = styled.div`
   height: auto !important;
   min-height: 1500vh !important;
 `;
+export const Welcome = styled.h1`
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #9deaff;
+`;
+export const SummaryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+`;

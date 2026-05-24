@@ -1,6 +1,7 @@
 import {
   DashboardWrapper,
   LogoutContainer,
+  Welcome,
 } from "../components/dashboard/DashboardStyles";
 import Button from "../components/ui/buttons/Button";
 import axios from "axios";
@@ -9,6 +10,7 @@ import API_CONFIG from "../config/api";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToTopButton from "../components/dashboard/ScrollToTopButton";
+import SearchBar from "../components/shared/search/SearchBar";
 
 export default function Home() {
   const { setAuth } = useContext(AuthContext);
@@ -32,7 +34,10 @@ export default function Home() {
         <Button onClick={handleLogout}>Log Out</Button>
       </LogoutContainer>
       <ScrollToTopButton />
-      <DashboardWrapper></DashboardWrapper>
+      <DashboardWrapper>
+        <Welcome>Welcome to SmartInventoryAI 👋</Welcome>
+        <SearchBar />
+      </DashboardWrapper>
     </>
   );
 }
