@@ -17,6 +17,7 @@ import ScrollToTopButton from "../components/dashboard/ScrollToTopButton";
 import SearchBar from "../components/shared/search/SearchBar";
 import SectionNavigation from "../components/dashboard/SectionNavigation";
 import AIInsights from "../components/dashboard/AIInsights";
+import QucikActions from "../components/dashboard/QuickActions";
 
 export default function Home() {
   const { setAuth } = useContext(AuthContext);
@@ -66,6 +67,9 @@ export default function Home() {
         </div>
         <div id="ai-insights">
           <AIInsights />
+        </div>
+        <div id="quick-actions">
+          <QucikActions />
         </div>
       </DashboardWrapper>
     </>
