@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import ScrollToTopButton from "../components/dashboard/ScrollToTopButton";
 import SearchBar from "../components/shared/search/SearchBar";
 import SectionNavigation from "../components/dashboard/SectionNavigation";
+import AIInsights from "../components/dashboard/AIInsights";
 
 export default function Home() {
   const { setAuth } = useContext(AuthContext);
@@ -62,6 +63,9 @@ export default function Home() {
               <CardValue>9</CardValue>
             </Card>
           </SummaryGrid>
+        </div>
+        <div id="ai-insights">
+          <AIInsights />
         </div>
       </DashboardWrapper>
     </>
