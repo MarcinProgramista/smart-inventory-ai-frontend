@@ -27,6 +27,13 @@ const AlertItem = styled.li`
   align-items: center;
   gap: 0.6rem;
   opacity: 0.95;
+  &.critical::before {
+    content: "🔴";
+  }
+
+  &.warning::before {
+    content: "🟠";
+  }
 `;
 export default function Alerts() {
   return (
