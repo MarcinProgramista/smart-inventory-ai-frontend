@@ -1,6 +1,10 @@
 import {
+  Card,
+  CardTitle,
+  CardValue,
   DashboardWrapper,
   LogoutContainer,
+  SummaryGrid,
   Welcome,
 } from "../components/dashboard/DashboardStyles";
 import Button from "../components/ui/buttons/Button";
@@ -11,6 +15,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ScrollToTopButton from "../components/dashboard/ScrollToTopButton";
 import SearchBar from "../components/shared/search/SearchBar";
+import SectionNavigation from "../components/dashboard/SectionNavigation";
 
 export default function Home() {
   const { setAuth } = useContext(AuthContext);
@@ -37,6 +42,27 @@ export default function Home() {
       <DashboardWrapper>
         <Welcome>Welcome to SmartInventoryAI 👋</Welcome>
         <SearchBar />
+        <SectionNavigation />
+        <div id="summary">
+          <SummaryGrid>
+            <Card>
+              <CardTitle>Total Items</CardTitle>
+              <CardValue>124</CardValue>
+            </Card>
+            <Card>
+              <CardTitle>Low Stock Alerts</CardTitle>
+              <CardValue>5</CardValue>
+            </Card>
+            <Card>
+              <CardTitle>Incoming Stock</CardTitle>
+              <CardValue>12</CardValue>
+            </Card>
+            <Card>
+              <CardTitle>Outgoing Stock</CardTitle>
+              <CardValue>9</CardValue>
+            </Card>
+          </SummaryGrid>
+        </div>
       </DashboardWrapper>
     </>
   );
