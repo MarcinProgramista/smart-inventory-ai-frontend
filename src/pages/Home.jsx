@@ -19,6 +19,7 @@ import SectionNavigation from "../components/dashboard/SectionNavigation";
 import AIInsights from "../components/dashboard/AIInsights";
 import QucikActions from "../components/dashboard/QuickActions";
 import RecentActivity from "../components/dashboard/RecentActivity";
+import Alerts from "../components/dashboard/Alerts";
 
 export default function Home() {
   const { setAuth } = useContext(AuthContext);
@@ -72,8 +73,11 @@ export default function Home() {
         <div id="quick-actions">
           <QucikActions />
         </div>
-        <div>
+        <div id="activity">
           <RecentActivity />
+        </div>
+        <div id="alerts">
+          <Alerts />
         </div>
       </DashboardWrapper>
     </>
