@@ -3,16 +3,10 @@ import {
   CardTitle,
   CardValue,
   DashboardWrapper,
-  LogoutContainer,
   SummaryGrid,
   Welcome,
 } from "../components/dashboard/DashboardStyles";
-import Button from "../components/ui/buttons/Button";
-import axios from "axios";
-import AuthContext from "../context/AuthProvider";
-import API_CONFIG from "../config/api";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+
 import ScrollToTopButton from "../components/dashboard/ScrollToTopButton";
 import SearchBar from "../components/shared/search/SearchBar";
 import SectionNavigation from "../components/dashboard/SectionNavigation";

@@ -5,6 +5,8 @@ const API_CONFIG = {
     LOGIN: "/api/auth/login",
     LOGOUT: "/api/auth/logout",
     REFRESH_TOKEN: "/api/auth/refresh_token",
+
+    CONTACTS_SEARCH: "/api/contacts/search",
   },
 };
 
