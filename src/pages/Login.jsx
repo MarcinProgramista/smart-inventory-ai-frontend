@@ -57,6 +57,7 @@ const Login = () => {
       setId(JSON.stringify(response?.data.user_id));
       const authData = {
         id: response?.data.user_id,
+        name: response.data.name,
         email,
         accessToken,
       };

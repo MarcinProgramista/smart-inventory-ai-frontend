@@ -4,6 +4,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import RequireAuth from "./hooks/RequireAuth";
 import Home from "./pages/Home";
+import Contacts from "./components/contacts/Contacts";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route path="/home" element={<Home />} />
           <Route path="/items" element={<h1>Items</h1>} />
-          <Route path="/contacts" element={<h1>Contacts</h1>} />
+          <Route path="/contacts" element={<Contacts />} />
           <Route path="/suppliers" element={<h1>Suppliers</h1>} />
         </Route>
       </Routes>
