@@ -24,26 +24,8 @@ import MiniCharts from "../components/dashboard/MiniCharts";
 import AIForecast from "../components/dashboard/AIForecast";
 
 export default function Home() {
-  const { setAuth } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const handleLogout = async () => {
-    try {
-      await axios.delete(
-        `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.LOGOUT}`,
-        { withCredentials: true },
-      );
-    } catch (err) {
-      console.error("Logout request failed:", err);
-    }
-
-    setAuth({});
-    navigate("/login");
-  };
   return (
     <>
-      <LogoutContainer>
-        <Button onClick={handleLogout}>Log Out</Button>
-      </LogoutContainer>
       <ScrollToTopButton />
       <DashboardWrapper>
         <Welcome>Welcome to SmartInventoryAI 👋</Welcome>
