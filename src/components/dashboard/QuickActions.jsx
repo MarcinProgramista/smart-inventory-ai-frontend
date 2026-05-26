@@ -51,6 +51,7 @@ export default function QucikActions() {
       <ActionCard onClick={() => navigate("/items/incoming")}>
         📦 Add Stock
       </ActionCard>
+      <ActionCard onClick={() => navigate("/contacts")}>👥 Contacts</ActionCard>
       <ActionCard onClick={() => navigate("/suppliers")}>
         🏭 Suppliers
       </ActionCard>

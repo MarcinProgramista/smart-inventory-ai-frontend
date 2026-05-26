@@ -60,28 +60,38 @@ const NavButton = styled.button`
   }
 `;
 export default function SectionNavigation() {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
   return (
     <NavWrapper>
-      <NavButton onClick={() => scrollTo("summary")}>
+      <NavButton onClick={() => scrollToSection("summary")}>
         <LayoutDashboard />
         Summary
       </NavButton>
-      <NavButton onClick={() => scrollTo("ai-insights")}>
+      <NavButton onClick={() => scrollToSection("ai-insights")}>
         <BrainCircuit /> AI Insights
       </NavButton>
-      <NavButton onClick={() => scrollTo("quick-actions")}>
+      <NavButton onClick={() => scrollToSection("quick-actions")}>
         <Zap /> Quick Actions
       </NavButton>
-      <NavButton onClick={() => scrollTo("activity")}>
+      <NavButton onClick={() => scrollToSection("activity")}>
         <ActivityIcon /> Activity
       </NavButton>
-      <NavButton onClick={() => scrollTo("alerts")}>
+      <NavButton onClick={() => scrollToSection("alerts")}>
         <BellRing /> Alerts
       </NavButton>
-      <NavButton onClick={() => scrollTo("charts")}>
+      <NavButton onClick={() => scrollToSection("charts")}>
         <BarChart3 /> Charts
       </NavButton>
-      <NavButton onClick={() => scrollTo("forteCast")}>
+      <NavButton onClick={() => scrollToSection("forecast")}>
         <LineChart />
         AI Forecast
       </NavButton>
