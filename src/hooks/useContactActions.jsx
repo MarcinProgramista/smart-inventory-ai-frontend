@@ -34,8 +34,24 @@ export default function useContactActions({ showToast }) {
       throw error;
     }
   };
+  const deleteContact = async (contact) => {
+    try {
+      await axiosPrivate.delete(
+        `${API_CONFIG.ENDPOINTS.CONTACTS}/${contact.id}`,
+      );
+      showToast(`Deleted contact: ${contact.first_name} ${contact.last_name}`);
+    } catch (error) {
+      const message =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to delete contact";
+      showToast(message, "error");
+      throw error;
+    }
+  };
   return {
     addContact,
     updateContact,
+    deleteContact,
   };
 }
