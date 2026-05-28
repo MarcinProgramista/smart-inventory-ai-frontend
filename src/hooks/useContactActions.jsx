@@ -1,10 +1,10 @@
-import axios from "../api/axios";
+import { axiosPrivate } from "../api/axios";
 import API_CONFIG from "../config/api";
 
 export default function useContactActions({ showToast }) {
   const addContact = async (payload) => {
     try {
-      await axios.post(API_CONFIG.ENDPOINTS.CONTACTS, payload);
+      await axiosPrivate.post(API_CONFIG.ENDPOINTS.CONTACTS, payload);
       showToast("Contact added");
     } catch (error) {
       const message =
@@ -15,7 +15,27 @@ export default function useContactActions({ showToast }) {
       throw error;
     }
   };
+  const updateContact = async (id, payload) => {
+    try {
+      await axiosPrivate.patch(
+        `${API_CONFIG.ENDPOINTS.CONTACTS}/${id}`,
+        payload,
+      );
+
+      showToast("Contact updated");
+    } catch (error) {
+      const message =
+        error.response?.data?.error ||
+        error.response?.data?.message ||
+        "Failed to update contact";
+
+      showToast(message, "error");
+
+      throw error;
+    }
+  };
   return {
     addContact,
+    updateContact,
   };
 }

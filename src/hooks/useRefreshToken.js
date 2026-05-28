@@ -7,13 +7,13 @@ export default function useRefreshToken() {
 
   const refresh = async () => {
     try {
-      console.log("REFRESH START");
+      // console.log("REFRESH START");
 
       const response = await axios.get(API_CONFIG.ENDPOINTS.REFRESH_TOKEN, {
         withCredentials: true,
       });
 
-      console.log("REFRESH SUCCESS", response.data);
+      //console.log("REFRESH SUCCESS", response.data);
 
       setAuth((prev) => ({
         ...prev,
