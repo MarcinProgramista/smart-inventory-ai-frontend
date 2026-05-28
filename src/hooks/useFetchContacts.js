@@ -24,9 +24,7 @@ export default function useFetchContacts() {
           sort,
           order,
         },
-        headers: {
-          Authorization: `Bearer ${auth?.accessToken}`,
-        },
+
         withCredentials: true,
       },
     );

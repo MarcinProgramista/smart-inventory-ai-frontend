@@ -4,8 +4,9 @@ const API_CONFIG = {
     REGISTER: "/api/register",
     LOGIN: "/api/auth/login",
     LOGOUT: "/api/auth/logout",
-    REFRESH_TOKEN: "/api/auth/refresh_token",
+    REFRESH_TOKEN: "/api/auth/refresh",
 
+    CONTACTS: "/api/contacts",
     CONTACTS_SEARCH: "/api/contacts/search",
   },
 };

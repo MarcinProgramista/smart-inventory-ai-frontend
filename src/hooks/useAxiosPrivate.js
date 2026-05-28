@@ -13,6 +13,7 @@ export default function useAxiosPrivate() {
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
+        // dodaj token TYLKO jeśli request go jeszcze nie ma
         if (!config.headers.Authorization) {
           config.headers.Authorization = `Bearer ${auth?.accessToken}`;
         }
@@ -24,17 +25,25 @@ export default function useAxiosPrivate() {
 
     const responseIntercept = axiosPrivate.interceptors.response.use(
       (response) => response,
+
       async (error) => {
         const prevRequest = error?.config;
 
+        // access token wygasł
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
 
+          // pobierz nowy access token
           const newAccessToken = await refresh();
 
-          prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-          return axiosPrivate(prevRequest);
+          // ponów request z NOWYM tokenem
+          return axiosPrivate({
+            ...prevRequest,
+            headers: {
+              ...prevRequest.headers,
+              Authorization: `Bearer ${newAccessToken}`,
+            },
+          });
         }
 
         return Promise.reject(error);

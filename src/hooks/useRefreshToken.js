@@ -6,16 +6,26 @@ export default function useRefreshToken() {
   const { setAuth } = useAuth();
 
   const refresh = async () => {
-    const response = await axios.get(API_CONFIG.ENDPOINTS.REFRESH_TOKEN, {
-      withCredentials: true,
-    });
+    try {
+      console.log("REFRESH START");
 
-    setAuth((prev) => ({
-      ...prev,
-      accessToken: response.data.accessToken,
-    }));
+      const response = await axios.get(API_CONFIG.ENDPOINTS.REFRESH_TOKEN, {
+        withCredentials: true,
+      });
 
-    return response.data.accessToken;
+      console.log("REFRESH SUCCESS", response.data);
+
+      setAuth((prev) => ({
+        ...prev,
+        accessToken: response.data.accessToken,
+      }));
+
+      return response.data.accessToken;
+    } catch (err) {
+      console.error("REFRESH ERROR", err);
+
+      throw err;
+    }
   };
 
   return refresh;
