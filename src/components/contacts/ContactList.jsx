@@ -2,6 +2,8 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import styled from "styled-components";
 import { PageWrapper } from "../shared/table/Table.styles";
 import Pagination from "../shared/Pagination";
+import ListHeader from "../shared/header/ListHeader";
+import { exportContactsToCSV, exportContactsToPDF } from "./export.utils";
 
 /* eslint-disable no-unused-vars */
 const EmptyState = styled.div`
@@ -32,9 +34,18 @@ export default function ContactList({
   sortOrder,
   onSortChange,
 }) {
+  const isEmpty = contacts.length === 0;
+  const isSearching = query && query.length > 0;
   return (
     <>
       <PageWrapper>
+        <ListHeader
+          onAdd={onAdd}
+          heading="Contacts"
+          onExportCSV={() => exportContactsToCSV(contacts)}
+          onExportPDF={() => exportContactsToPDF(contacts)}
+          addTitle="Add Contact"
+        />
         <Pagination
           page={page}
           totalPages={Math.ceil(total / limit)}
