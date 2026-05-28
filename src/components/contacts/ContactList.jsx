@@ -1,9 +1,18 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil, Trash2 } from "lucide-react";
 import styled from "styled-components";
-import { PageWrapper } from "../shared/table/Table.styles";
+import {
+  ActionButton,
+  PageWrapper,
+  Table,
+  TableWrapper,
+  Td,
+  Th,
+  Tr,
+} from "../shared/table/Table.styles";
 import Pagination from "../shared/Pagination";
 import ListHeader from "../shared/header/ListHeader";
 import { exportContactsToCSV, exportContactsToPDF } from "./export.utils";
+import { formatPhone } from "./contact.utilis";
 
 /* eslint-disable no-unused-vars */
 const EmptyState = styled.div`
@@ -46,6 +55,95 @@ export default function ContactList({
           onExportPDF={() => exportContactsToPDF(contacts)}
           addTitle="Add Contact"
         />
+        {isEmpty ? (
+          <EmptyState>
+            {isSearching ? (
+              <p>No contacts found for "{query}"</p>
+            ) : (
+              <>
+                <p>You don't have any contacts yet.</p>
+                <p>Cilic "Add Contact" to create your first one.</p>
+              </>
+            )}
+          </EmptyState>
+        ) : (
+          <TableWrapper>
+            <Table>
+              <thead>
+                <Tr>
+                  <Th
+                    onClick={() =>
+                      onSortChange(
+                        "first_name",
+                        sortOrder === "asc" ? "desc" : "asc",
+                      )
+                    }
+                  >
+                    First name
+                    <SortIcon
+                      active={sortBy === "first_name"}
+                      order={sortOrder}
+                    />
+                  </Th>
+                  <Th
+                    onClick={() =>
+                      onSortChange(
+                        "last_name",
+                        sortOrder === "asc" ? "desc" : "asc",
+                      )
+                    }
+                  >
+                    Last name
+                    <SortIcon
+                      active={sortBy === "last_name"}
+                      order={sortOrder}
+                    />
+                  </Th>
+                  <Th
+                    onClick={() =>
+                      onSortChange(
+                        "email",
+                        sortOrder === "asc" ? "desc" : "asc",
+                      )
+                    }
+                  >
+                    Email
+                    <SortIcon active={sortBy === "email"} order={sortOrder} />
+                  </Th>
+                  <Th>Phone</Th>
+                  <Th
+                    onClick={() =>
+                      onSortChange("role", sortOrder === "asc" ? "desc" : "asc")
+                    }
+                  >
+                    Role
+                  </Th>
+                  <Th>Action</Th>
+                </Tr>
+              </thead>
+              <tbody>
+                {contacts.map((c) => (
+                  <Tr key={c.id}>
+                    <Td>{c.first_name}</Td>
+                    <Td>{c.last_name}</Td>
+                    <Td>{c.email || "-"}</Td>
+                    <Td>{formatPhone(c.mobile_phone)}</Td>
+
+                    <Td>{c.role || "-"}</Td>
+                    <Td>
+                      <ActionButton onClick={() => onEdit(c)}>
+                        <Pencil size={16} />
+                      </ActionButton>
+                      <ActionButton $delete onClick={() => onDelete(c)}>
+                        <Trash2 size={16} />
+                      </ActionButton>
+                    </Td>
+                  </Tr>
+                ))}
+              </tbody>
+            </Table>
+          </TableWrapper>
+        )}
         <Pagination
           page={page}
           totalPages={Math.ceil(total / limit)}
