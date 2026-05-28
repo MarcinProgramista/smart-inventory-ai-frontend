@@ -5,6 +5,7 @@ import useFetchContacts from "../../hooks/useFetchContacts";
 import { useSearchParams } from "react-router-dom";
 import useDebounce from "../../hooks/useDebounce";
 import SearchBar from "../shared/search/SearchBar";
+import ContactList from "./ContactList";
 
 export default function Contacts() {
   const { auth } = useAuth();
@@ -69,6 +70,18 @@ export default function Contacts() {
         value={search}
         onChange={handleSearchChange}
         placeholder="Search contacts..."
+      />
+      <ContactList
+        contacts={contacts}
+        query={debouncedSearch}
+        page={page}
+        limit={limit}
+        total={total}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        onSortChange={setSortParams}
+        onPrev={() => setPage(page - 1)}
+        onNext={() => setPage(page + 1)}
       />
     </>
   );

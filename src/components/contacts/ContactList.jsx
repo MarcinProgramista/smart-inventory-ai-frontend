@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import styled from "styled-components";
 import { PageWrapper } from "../shared/table/Table.styles";
+import Pagination from "../shared/Pagination";
 
 /* eslint-disable no-unused-vars */
 const EmptyState = styled.div`
@@ -33,7 +34,16 @@ export default function ContactList({
 }) {
   return (
     <>
-      <PageWrapper></PageWrapper>
+      <PageWrapper>
+        <Pagination
+          page={page}
+          totalPages={Math.ceil(total / limit)}
+          canPrev={page > 1}
+          canNext={page < Math.ceil(total / limit)}
+          onPrev={onPrev}
+          onNext={onNext}
+        />
+      </PageWrapper>
     </>
   );
 }
