@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import NeonCardBright from "../ui/NeonCardBright";
+import Logo from "../ui/Logo";
+import { useEffect, useState } from "react";
 
 /* eslint-disable no-unused-vars */
 const EMPTY_FORM = {
@@ -31,11 +33,30 @@ export default function AddContactDrawer({
   onSubmit,
   initialData = null,
 }) {
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        first_name: initialData.first_name ?? "",
+        last_name: initialData.last_name ?? "",
+        email: initialData.email ?? "",
+        mobile_phone: initialData.mobile_phone ?? "",
+      });
+    } else {
+      setForm(EMPTY_FORM);
+    }
+    setErrors({});
+  }, [initialData, open]);
   if (!open) return null;
 
   return (
     <Backdrop onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>Add contact</ModalBox>
+      <ModalBox onClick={(e) => e.stopPropagation()}>
+        <Logo>{initialData ? "Edit contact" : "Add contact"}</Logo>
+      </ModalBox>
     </Backdrop>
   );
 }
