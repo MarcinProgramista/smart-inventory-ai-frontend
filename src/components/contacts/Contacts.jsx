@@ -1,14 +1,19 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useFetchContacts from "../../hooks/useFetchContacts";
 import { useSearchParams } from "react-router-dom";
 import useDebounce from "../../hooks/useDebounce";
 import SearchBar from "../shared/search/SearchBar";
 import ContactList from "./ContactList";
+import ToastContext from "../../context/ToastContext";
+import useContactActions from "../../hooks/useContactActions";
+import AddContactDrawer from "./AddContactDrawer";
 
 export default function Contacts() {
   const { auth } = useAuth();
+  const { showToast } = useContext(ToastContext);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { contacts, total, fetchContacts } = useFetchContacts();
 
@@ -17,9 +22,14 @@ export default function Contacts() {
   const limit = 8;
   const sortBy = searchParams.get("sort") ?? "last_name";
   const sortOrder = searchParams.get("order") ?? "asc";
-
+  const { addContact, updateContact, deleteContact } = useContactActions({
+    showToast,
+  });
   const [search, setSearch] = useState(query);
   const debouncedSearch = useDebounce(search, 400);
+
+  const [addOpen, setAddOpen] = useState(false);
+  const [editContact, setEditContact] = useState(null);
   /* ===================== FETCH ===================== */
 
   useEffect(() => {
@@ -61,7 +71,17 @@ export default function Contacts() {
       return next;
     });
   };
+  const handleDelete = async (contact) => {
+    await deleteContact(contact);
 
+    fetchContacts(auth.id, {
+      q: debouncedSearch,
+      page,
+      limit,
+      sort: sortBy,
+      order: sortOrder,
+    });
+  };
   console.log(contacts);
 
   return (
@@ -82,6 +102,17 @@ export default function Contacts() {
         onSortChange={setSortParams}
         onPrev={() => setPage(page - 1)}
         onNext={() => setPage(page + 1)}
+        onDelete={handleDelete}
+        onAdd={() => setAddOpen(true)}
+        onEdit={(c) => setEditContact(c)}
+      />
+      <AddContactDrawer
+        open={addOpen || !!editContact}
+        initialData={editContact}
+        onClose={() => {
+          setAddOpen(false);
+          setEditContact(null);
+        }}
       />
     </>
   );
