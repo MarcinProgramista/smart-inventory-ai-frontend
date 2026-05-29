@@ -1,6 +1,14 @@
 import styled from "styled-components";
+import NeonCardBright from "../ui/NeonCardBright";
 
 /* eslint-disable no-unused-vars */
+const EMPTY_FORM = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  role: "",
+  mobile_phone: "",
+};
 const Backdrop = styled.div`
   position: fixed;
   inset: 0;
@@ -11,6 +19,12 @@ const Backdrop = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const ModalBox = styled(NeonCardBright)`
+  width: 520px;
+  max-width: 95%;
+  padding: 2.4rem;
+  position: relative;
+`;
 export default function AddContactDrawer({
   open,
   onClose,
@@ -19,5 +33,9 @@ export default function AddContactDrawer({
 }) {
   if (!open) return null;
 
-  return <Backdrop onClick={onClose}>Add contact</Backdrop>;
+  return (
+    <Backdrop onClick={onClose}>
+      <ModalBox onClick={(e) => e.stopPropagation()}>Add contact</ModalBox>
+    </Backdrop>
+  );
 }
