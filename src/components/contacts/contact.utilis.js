@@ -26,18 +26,31 @@ export function normalizeContactPayload(form) {
 
 export function validateContact(form) {
   const errors = {};
-  if (!form.first_name || form.first_name.trim().length < 2) {
+
+  if (!form.first_name?.trim() || form.first_name.trim().length < 2) {
     errors.first_name = "Min. 2 characters";
   }
+
+  if (!form.last_name?.trim() || form.last_name.trim().length < 2) {
+    errors.last_name = "Min. 2 characters";
+  }
+
+  if (!form.role?.trim()) {
+    errors.role = "Role is required";
+  }
+
   if (!form.email && !form.mobile_phone) {
     errors.email = "At least one contact method is required";
     errors.mobile_phone = "At least one contact method is required";
   }
+
   if (form.email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(form.email.trim())) {
       errors.email = "Invalid email format";
     }
   }
+
   return errors;
 }

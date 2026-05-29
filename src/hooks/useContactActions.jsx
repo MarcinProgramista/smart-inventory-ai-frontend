@@ -7,10 +7,15 @@ export default function useContactActions({ showToast }) {
       await axiosPrivate.post(API_CONFIG.ENDPOINTS.CONTACTS, payload);
       showToast("Contact added");
     } catch (error) {
+      console.log("STATUS:", error.response?.status);
+      console.log("DATA:", error.response?.data);
+
       const message =
+        error.response?.data?.errors?.join(", ") ||
         error.response?.data?.error ||
         error.response?.data?.message ||
         "Failed to add contact";
+
       showToast(message, "error");
       throw error;
     }
@@ -24,13 +29,15 @@ export default function useContactActions({ showToast }) {
 
       showToast("Contact updated");
     } catch (error) {
+      console.log("STATUS:", error.response?.status);
+      console.log("DATA:", error.response?.data);
+
       const message =
         error.response?.data?.error ||
         error.response?.data?.message ||
-        "Failed to update contact";
+        "Failed to add contact";
 
       showToast(message, "error");
-
       throw error;
     }
   };

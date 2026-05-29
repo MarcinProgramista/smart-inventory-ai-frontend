@@ -9,6 +9,7 @@ import ContactList from "./ContactList";
 import ToastContext from "../../context/ToastContext";
 import useContactActions from "../../hooks/useContactActions";
 import AddContactDrawer from "./AddContactDrawer";
+import { normalizeContactPayload } from "./contact.utilis";
 
 export default function Contacts() {
   const { auth } = useAuth();
@@ -110,6 +111,27 @@ export default function Contacts() {
         open={addOpen || !!editContact}
         initialData={editContact}
         onClose={() => {
+          setAddOpen(false);
+          setEditContact(null);
+        }}
+        onSubmit={async (payload) => {
+          if (editContact) {
+            await updateContact(editContact.id, payload);
+          } else {
+            await addContact({
+              ...normalizeContactPayload(payload),
+              user_id: Number(auth.id),
+            });
+          }
+
+          fetchContacts(auth.id, {
+            q: debouncedSearch,
+            page,
+            limit,
+            sort: sortBy,
+            order: sortOrder,
+          });
+
           setAddOpen(false);
           setEditContact(null);
         }}
