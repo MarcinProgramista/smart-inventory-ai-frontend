@@ -83,7 +83,6 @@ export default function Contacts() {
       order: sortOrder,
     });
   };
-  console.log(contacts);
 
   return (
     <>

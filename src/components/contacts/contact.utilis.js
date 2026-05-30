@@ -7,7 +7,7 @@ export const normalizePhone = (value = "") => {
 };
 
 export const formatPhone = (digits = "", withPrefix = false) => {
-  if (!digits) return withPrefix ? "+48" : "-";
+  if (!digits) return "";
   const clean = normalizePhone(digits);
   if (clean.length !== 9) return withPrefix ? "+48" + clean : clean;
   const formatted = `${clean.slice(0, 3)}-${clean.slice(3, 6)}-${clean.slice(6)}`;

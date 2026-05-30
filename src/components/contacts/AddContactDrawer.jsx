@@ -65,11 +65,13 @@ export default function AddContactDrawer({
         first_name: initialData.first_name ?? "",
         last_name: initialData.last_name ?? "",
         email: initialData.email ?? "",
+        role: initialData.role ?? "",
         mobile_phone: initialData.mobile_phone ?? "",
       });
     } else {
       setForm(EMPTY_FORM);
     }
+
     setErrors({});
   }, [initialData, open]);
 
