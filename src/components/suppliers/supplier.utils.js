@@ -1,0 +1,42 @@
+export function normalizeSupplierPayload(form) {
+  return {
+    name: form.name?.trim() || "",
+    street: form.street?.trim() || null,
+    postal_code: form.postal_code?.trim() || null,
+    city: form.city?.trim() || "",
+    country: form.country?.trim().toUpperCase() || "PL",
+    contact_id: form.contact_id || null,
+  };
+}
+export function validateSupplier(form) {
+  const errors = {};
+
+  if (!form.name || form.name.trim().length < 2) {
+    errors.name = "Min. 2 characters";
+  }
+
+  if (!form.city || form.city.trim().length < 2) {
+    errors.city = "Min. 2 characters";
+  }
+
+  if (!form.country || form.country.trim().length !== 2) {
+    errors.country = "Country code must have 2 characters";
+  }
+
+  if (form.postal_code) {
+    const postalRegex = /^\d{2}-\d{3}$/;
+
+    if (!postalRegex.test(form.postal_code.trim())) {
+      errors.postal_code = "Format: 00-000";
+    }
+  }
+
+  return errors;
+}
+export const normalizePostalCode = (value = "") => {
+  const digits = value.replace(/\D/g, "");
+
+  if (digits.length <= 2) return digits;
+
+  return `${digits.slice(0, 2)}-${digits.slice(2, 5)}`;
+};
