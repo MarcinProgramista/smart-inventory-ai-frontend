@@ -54,3 +54,25 @@ export function validateContact(form) {
 
   return errors;
 }
+
+const errorMap = {
+  phone: "mobile_phone",
+  email: "email",
+  "First name": "first_name",
+  "Last name": "last_name",
+  Role: "role",
+};
+
+export function mapBackendContactErrors(errors = []) {
+  const result = {};
+
+  errors.forEach((message) => {
+    Object.entries(errorMap).forEach(([key, field]) => {
+      if (message.includes(key)) {
+        result[field] = message;
+      }
+    });
+  });
+
+  return result;
+}

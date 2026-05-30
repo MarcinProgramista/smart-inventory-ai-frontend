@@ -3,7 +3,12 @@ import styled from "styled-components";
 import NeonCardBright from "../ui/NeonCardBright";
 import Logo from "../ui/Logo";
 import { useEffect, useState } from "react";
-import { formatPhone, normalizePhone, validateContact } from "./contact.utilis";
+import {
+  formatPhone,
+  normalizePhone,
+  validateContact,
+  mapBackendContactErrors,
+} from "./contact.utilis";
 import Input from "../common/Input";
 import RegisterButton from "../ui/buttons/RegisterButton";
 
@@ -94,10 +99,7 @@ export default function AddContactDrawer({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("SUBMIT");
-
     const validationErrors = validateContact(form);
-    console.log(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -115,36 +117,10 @@ export default function AddContactDrawer({
     } catch (err) {
       const backendErrors = err?.response?.data?.errors || [];
 
-      const nextErrors = {};
-
-      backendErrors.forEach((error) => {
-        if (error.includes("phone")) {
-          nextErrors.mobile_phone = error;
-        }
-
-        if (error.includes("email")) {
-          nextErrors.email = error;
-        }
-
-        if (error.includes("First name")) {
-          nextErrors.first_name = error;
-        }
-
-        if (error.includes("Last name")) {
-          nextErrors.last_name = error;
-        }
-
-        if (error.includes("Role")) {
-          nextErrors.role = error;
-        }
-      });
+      const nextErrors = mapBackendContactErrors(backendErrors);
 
       if (Object.keys(nextErrors).length > 0) {
         setErrors(nextErrors);
-      } else {
-        setErrors({
-          email: "Something went wrong",
-        });
       }
     } finally {
       setSubmitting(false);
