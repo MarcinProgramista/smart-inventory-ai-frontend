@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import styled from "styled-components";
-import NeonCardBright from "../ui/NeonCardBright";
-import Logo from "../ui/Logo";
 import { useEffect, useState } from "react";
 import {
   formatPhone,
@@ -11,7 +9,7 @@ import {
 } from "./contact.utilis";
 import Input from "../common/Input";
 import RegisterButton from "../ui/buttons/RegisterButton";
-
+import EntityDrawer from "../shared/drawer/EntityDrawer";
 /* eslint-disable no-unused-vars */
 const EMPTY_FORM = {
   first_name: "",
@@ -20,22 +18,7 @@ const EMPTY_FORM = {
   role: "",
   mobile_phone: "",
 };
-const Backdrop = styled.div`
-  position: fixed;
-  inset: 0;
-  display: flex;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-`;
-const ModalBox = styled(NeonCardBright)`
-  width: 520px;
-  max-width: 95%;
-  padding: 2.4rem;
-  position: relative;
-`;
+
 const Form = styled.form`
   display: grid;
   grid-template-columns: 1fr;
@@ -74,8 +57,6 @@ export default function AddContactDrawer({
 
     setErrors({});
   }, [initialData, open]);
-
-  if (!open) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,63 +111,67 @@ export default function AddContactDrawer({
   };
 
   return (
-    <Backdrop onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <Logo>{initialData ? "Edit contact" : "Add contact"}</Logo>
-        <Form onSubmit={handleSubmit}>
-          <Input
-            name="first_name"
-            placeholder="First name"
-            value={form.first_name}
-            onChange={handleChange}
-            error={errors.first_name}
-          />
-          <Input
-            name="last_name"
-            placeholder="Last name"
-            value={form.last_name}
-            onChange={handleChange}
-            error={errors.last_name}
-          />
-          <Input
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            error={errors.email}
-          />
+    <EntityDrawer
+      open={open}
+      title={initialData ? "Edit contact" : "Add contact"}
+      onClose={onClose}
+    >
+      <Form onSubmit={handleSubmit}>
+        <Input
+          name="first_name"
+          placeholder="First name"
+          value={form.first_name}
+          onChange={handleChange}
+          error={errors.first_name}
+        />
 
-          <Input
-            name="role"
-            placeholder="Role"
-            value={form.role}
-            onChange={handleChange}
-            error={errors.role}
-          />
-          <Input
-            name="mobile_phone"
-            placeholder="+48 ___-___-___"
-            value={formatPhone(form.mobile_phone, true)}
-            onChange={handleChange}
-            error={errors.mobile_phone}
-          />
+        <Input
+          name="last_name"
+          placeholder="Last name"
+          value={form.last_name}
+          onChange={handleChange}
+          error={errors.last_name}
+        />
 
-          <Footer>
-            <RegisterButton
-              type="button"
-              $variant="secondary"
-              onClick={onClose}
-              disabled={submitting}
-            >
-              Cancel
-            </RegisterButton>
+        <Input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          error={errors.email}
+        />
 
-            <RegisterButton type="submit" disabled={submitting}>
-              {submitting ? "Saving..." : initialData ? "Save changes" : "Add"}
-            </RegisterButton>
-          </Footer>
-        </Form>
-      </ModalBox>
-    </Backdrop>
+        <Input
+          name="role"
+          placeholder="Role"
+          value={form.role}
+          onChange={handleChange}
+          error={errors.role}
+        />
+
+        <Input
+          name="mobile_phone"
+          placeholder="+48 ___-___-___"
+          value={formatPhone(form.mobile_phone, true)}
+          onChange={handleChange}
+          error={errors.mobile_phone}
+        />
+
+        <Footer>
+          <RegisterButton
+            type="button"
+            $variant="secondary"
+            onClick={onClose}
+            disabled={submitting}
+          >
+            Cancel
+          </RegisterButton>
+
+          <RegisterButton type="submit" disabled={submitting}>
+            {submitting ? "Saving..." : initialData ? "Save changes" : "Add"}
+          </RegisterButton>
+        </Footer>
+      </Form>
+    </EntityDrawer>
   );
 }

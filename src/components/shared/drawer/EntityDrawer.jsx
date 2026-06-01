@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import NeonCardBright from "../ui/NeonCardBright";
-import Logo from "../ui/Logo";
+import NeonCardBright from "../../ui/NeonCardBright";
+import Logo from "../../ui/Logo";
 
 const Backdrop = styled.div`
   position: fixed;
