@@ -31,7 +31,8 @@ export default function Suppliers() {
 
   const [search, setSearch] = useState(query);
   const debouncedSearch = useDebounce(search, 400);
-
+  const [addOpen, setAddOpen] = useState(false);
+  const [editSupplier, setEditSupplier] = useState(null);
   useEffect(() => {
     if (!auth.id) return;
     fetchSuppliers(auth.id, {
@@ -46,7 +47,6 @@ export default function Suppliers() {
     setSearch(value);
     setQuery(value);
   };
-  console.log(suppliers);
 
   return (
     <>
@@ -66,7 +66,7 @@ export default function Suppliers() {
         onSortChange={setSort}
         onEdit={() => {}}
         onDelete={() => {}}
-        onAdd={() => {}}
+        onAdd={() => setAddOpen(true)}
       />
     </>
   );
