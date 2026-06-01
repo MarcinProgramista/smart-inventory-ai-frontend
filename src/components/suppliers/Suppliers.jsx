@@ -7,6 +7,7 @@ import ToastContext from "../../context/ToastContext";
 import useSupplierActions from "../../hooks/useSupplierAction";
 import useFetchSuppliers from "../../hooks/useFetchSuppliers";
 import useDebounce from "../../hooks/useDebounce";
+import SearchBar from "../shared/search/SearchBar";
 
 export default function Suppliers() {
   const { auth } = useAuth();
@@ -37,7 +38,24 @@ export default function Suppliers() {
       order: sortOrder,
     });
   }, [auth?.id, debouncedSearch, page, sortBy, sortOrder]);
+  const handleSearchChange = (value) => {
+    setSearch(value);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set("q", value);
+      next.set("page", 1);
+      return next;
+    });
+  };
   console.log(suppliers);
 
-  return <h1>{auth.name}</h1>;
+  return (
+    <>
+      <SearchBar
+        value={search}
+        onChange={handleSearchChange}
+        placeholder="Search suppliers .."
+      />
+    </>
+  );
 }
