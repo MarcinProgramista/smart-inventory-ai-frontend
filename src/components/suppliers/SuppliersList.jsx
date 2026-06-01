@@ -11,6 +11,7 @@ import {
 } from "../shared/table/Table.styles";
 import ListHeader from "../shared/header/ListHeader";
 import { Pencil, Trash2 } from "lucide-react";
+import { exportSuppliersToCSV, exportSuppliersToPDF } from "./export.utilis";
 
 const EmptyState = styled.div`
   padding: 3rem;
@@ -28,7 +29,13 @@ export default function SuppliersList({
   const isSearching = query && query.length > 0;
   return (
     <PageWrapper>
-      <ListHeader heading="Suppliers" onAdd={onAdd} addTitle="Add Supplier" />
+      <ListHeader
+        heading="Suppliers"
+        onAdd={onAdd}
+        onExportCSV={() => exportSuppliersToCSV(suppliers)}
+        onExportPDF={() => exportSuppliersToPDF(suppliers)}
+        addTitle="Add Supplier"
+      />
       {isEmpty ? (
         <EmptyState>
           <p>You don't have any suppliers yet.</p>
