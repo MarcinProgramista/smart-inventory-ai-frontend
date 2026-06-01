@@ -10,12 +10,14 @@ import ToastContext from "../../context/ToastContext";
 import useContactActions from "../../hooks/useContactActions";
 import AddContactDrawer from "./AddContactDrawer";
 import { normalizeContactPayload } from "./contact.utilis";
-
+import useSearchParamsHelpers from "../../hooks/useSearchParamsHelpers";
 export default function Contacts() {
   const { auth } = useAuth();
   const { showToast } = useContext(ToastContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const { setQuery, setSort, setPage } =
+    useSearchParamsHelpers(setSearchParams);
   const { contacts, total, fetchContacts } = useFetchContacts();
 
   const query = searchParams.get("q") ?? "";
@@ -48,29 +50,7 @@ export default function Contacts() {
 
   const handleSearchChange = (value) => {
     setSearch(value);
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      next.set("page", 1); // reset page TYLKO przy search
-      return next;
-    });
-  };
-
-  const setSortParams = (by, order) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      next.set("sort", by);
-      next.set("order", order);
-      next.set("page", 1);
-      return next;
-    });
-  };
-
-  const setPage = (value) => {
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      next.set("page", value);
-      return next;
-    });
+    setQuery(value);
   };
   const handleDelete = async (contact) => {
     await deleteContact(contact);
@@ -99,7 +79,7 @@ export default function Contacts() {
         total={total}
         sortBy={sortBy}
         sortOrder={sortOrder}
-        onSortChange={setSortParams}
+        onSortChange={setSort}
         onPrev={() => setPage(page - 1)}
         onNext={() => setPage(page + 1)}
         onDelete={handleDelete}

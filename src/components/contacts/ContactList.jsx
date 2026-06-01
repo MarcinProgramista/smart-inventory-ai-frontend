@@ -117,6 +117,7 @@ export default function ContactList({
                     }
                   >
                     Role
+                    <SortIcon active={sortBy === "role"} order={sortOrder} />
                   </Th>
                   <Th>Action</Th>
                 </Tr>
