@@ -9,12 +9,15 @@ import useFetchSuppliers from "../../hooks/useFetchSuppliers";
 import useDebounce from "../../hooks/useDebounce";
 import SearchBar from "../shared/search/SearchBar";
 import SuppliersList from "./SuppliersList";
+import useSearchParamsHelpers from "../../hooks/useSearchParamsHelpers";
 
 export default function Suppliers() {
   const { auth } = useAuth();
   const { showToast } = useContext(ToastContext);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const { setQuery, setSort, setPage } =
+    useSearchParamsHelpers(setSearchParams);
   const { suppliers, total, fetchSuppliers } = useFetchSuppliers();
 
   const query = searchParams.get("q") ?? "";
@@ -41,12 +44,7 @@ export default function Suppliers() {
   }, [auth?.id, debouncedSearch, page, sortBy, sortOrder]);
   const handleSearchChange = (value) => {
     setSearch(value);
-    setSearchParams((prev) => {
-      const next = new URLSearchParams(prev);
-      next.set("q", value);
-      next.set("page", 1);
-      return next;
-    });
+    setQuery(value);
   };
   console.log(suppliers);
 
@@ -65,6 +63,7 @@ export default function Suppliers() {
         total={total}
         sortBy={sortBy}
         sortOrder={sortOrder}
+        onSortChange={setSort}
         onEdit={() => {}}
         onDelete={() => {}}
         onAdd={() => {}}

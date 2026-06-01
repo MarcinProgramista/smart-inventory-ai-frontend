@@ -11,6 +11,7 @@ import useContactActions from "../../hooks/useContactActions";
 import AddContactDrawer from "./AddContactDrawer";
 import { normalizeContactPayload } from "./contact.utilis";
 import useSearchParamsHelpers from "../../hooks/useSearchParamsHelpers";
+
 export default function Contacts() {
   const { auth } = useAuth();
   const { showToast } = useContext(ToastContext);

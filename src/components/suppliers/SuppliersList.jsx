@@ -10,7 +10,14 @@ import {
   Tr,
 } from "../shared/table/Table.styles";
 import ListHeader from "../shared/header/ListHeader";
-import { Pencil, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Pencil,
+  SortAscIcon,
+  SortDescIcon,
+  Trash2,
+} from "lucide-react";
 import { exportSuppliersToCSV, exportSuppliersToPDF } from "./export.utilis";
 
 const EmptyState = styled.div`
@@ -18,12 +25,20 @@ const EmptyState = styled.div`
   text-align: center;
   opacity: 0.7;
 `;
+
+function SortIcon({ active, order }) {
+  if (!active) return null;
+  return order === "asc" ? <ChevronUp size={14} /> : <ChevronDown size={14} />;
+}
 export default function SuppliersList({
   suppliers,
   query,
   onAdd,
   onEdit,
   onDelete,
+  sortOrder,
+  sortBy,
+  onSortChange,
 }) {
   const isEmpty = suppliers.length === 0;
   const isSearching = query && query.length > 0;
@@ -45,9 +60,33 @@ export default function SuppliersList({
           <Table>
             <thead>
               <Tr>
-                <Th>Name</Th>
-                <Th>City</Th>
-                <Th>Country</Th>
+                <Th
+                  onClick={() =>
+                    onSortChange("name", sortOrder === "asc" ? "desc" : "asc")
+                  }
+                >
+                  Name
+                  <SortIcon active={sortBy === "name"} order={sortOrder} />
+                </Th>
+                <Th
+                  onClick={() =>
+                    onSortChange("city", sortOrder === "asc" ? "desc" : "asc")
+                  }
+                >
+                  City
+                  <SortIcon active={sortBy === "city"} order={sortOrder} />
+                </Th>
+                <Th
+                  onClick={() =>
+                    onSortChange(
+                      "country",
+                      sortOrder === "asc" ? "desc" : "asc",
+                    )
+                  }
+                >
+                  Country
+                  <SortIcon active={sortBy === "country"} order={sortOrder} />
+                </Th>
                 <Th>Contact</Th>
                 <Th>Action</Th>
               </Tr>
