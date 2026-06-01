@@ -8,6 +8,7 @@ import useSupplierActions from "../../hooks/useSupplierAction";
 import useFetchSuppliers from "../../hooks/useFetchSuppliers";
 import useDebounce from "../../hooks/useDebounce";
 import SearchBar from "../shared/search/SearchBar";
+import SuppliersList from "./SuppliersList";
 
 export default function Suppliers() {
   const { auth } = useAuth();
@@ -55,6 +56,18 @@ export default function Suppliers() {
         value={search}
         onChange={handleSearchChange}
         placeholder="Search suppliers .."
+      />
+      <SuppliersList
+        suppliers={suppliers}
+        query={debouncedSearch}
+        page={page}
+        limit={limit}
+        total={total}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        onEdit={() => {}}
+        onDelete={() => {}}
+        onAdd={() => {}}
       />
     </>
   );
