@@ -10,6 +10,7 @@ import useDebounce from "../../hooks/useDebounce";
 import SearchBar from "../shared/search/SearchBar";
 import SuppliersList from "./SuppliersList";
 import useSearchParamsHelpers from "../../hooks/useSearchParamsHelpers";
+import AddSupplierDrawer from "./AddSupplierDrawer";
 
 export default function Suppliers() {
   const { auth } = useAuth();
@@ -67,6 +68,14 @@ export default function Suppliers() {
         onEdit={() => {}}
         onDelete={() => {}}
         onAdd={() => setAddOpen(true)}
+      />
+      <AddSupplierDrawer
+        open={addOpen || !!editSupplier}
+        initialData={editSupplier}
+        onClose={() => {
+          setAddOpen(false);
+          setEditSupplier(null);
+        }}
       />
     </>
   );
