@@ -52,9 +52,7 @@ export default function SuppliersList({
                   <Td>{s.city}</Td>
                   <Td>{s.country}</Td>
                   <Td>
-                    {s.contact
-                      ? `${s.contact.first_name} ${s.contact.last_name}`
-                      : "-"}
+                    {s.first_name ? `${s.first_name} ${s.last_name}` : "-"}
                   </Td>
                   <Td>
                     <ActionButton onClick={() => onEdit(s)}>
