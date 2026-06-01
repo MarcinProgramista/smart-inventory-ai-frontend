@@ -9,6 +9,7 @@ const API_CONFIG = {
     CONTACTS: "/api/contacts",
     CONTACTS_SEARCH: "/api/contacts/search",
 
+    SUPPLIERS: "/api/suppliers",
     SUPPLIERS_SEARCH: "/api/suppliers/search",
   },
 };
