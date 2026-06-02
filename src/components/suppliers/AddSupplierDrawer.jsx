@@ -2,9 +2,10 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import EntityDrawer from "../shared/drawer/EntityDrawer";
-import { validateSupplier } from "./supplier.utils";
+import { mapBackendSupplierErrors, validateSupplier } from "./supplier.utils";
 import styled from "styled-components";
 import RegisterButton from "../ui/buttons/RegisterButton";
+import Input from "../common/Input";
 const EMPTY_FORM = {
   name: "",
   street: "",
@@ -52,14 +53,51 @@ export default function AddSupplierDrawer({
     setErrors({});
   }, [initialData, open]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+  };
+
   const handleSubmit = async (e) => {
+    console.log("SUBMIT");
     e.preventDefault();
 
     const validationErrors = validateSupplier(form);
 
+    console.log("FORM", form);
+    console.log("VALIDATION", validationErrors);
+
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
+    }
+    try {
+      setSubmitting(true);
+
+      await onSubmit(form);
+
+      setForm(EMPTY_FORM);
+      setErrors({});
+      onClose();
+    } catch (err) {
+      const backendErrors = err?.response?.data?.errors || [];
+
+      const nextErrors = mapBackendSupplierErrors(backendErrors);
+
+      if (Object.keys(nextErrors).length > 0) {
+        setErrors(nextErrors);
+      }
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -69,6 +107,12 @@ export default function AddSupplierDrawer({
       onClose={onClose}
     >
       <Form onSubmit={handleSubmit}>
+        <Input
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          error={errors.name}
+        />
         <Footer>
           <RegisterButton
             type="button"
