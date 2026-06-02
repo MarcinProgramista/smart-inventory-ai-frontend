@@ -19,6 +19,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { exportSuppliersToCSV, exportSuppliersToPDF } from "./export.utilis";
+import Pagination from "../shared/Pagination";
 
 const EmptyState = styled.div`
   padding: 3rem;
@@ -33,6 +34,11 @@ function SortIcon({ active, order }) {
 export default function SuppliersList({
   suppliers,
   query,
+  page,
+  limit,
+  total,
+  onPrev,
+  onNext,
   onAdd,
   onEdit,
   onDelete,
@@ -114,6 +120,14 @@ export default function SuppliersList({
           </Table>
         </TableWrapper>
       )}
+      <Pagination
+        page={page}
+        totalPages={Math.ceil(total / limit)}
+        canPrev={page > 1}
+        canNext={page < Math.ceil(total / limit)}
+        onPrev={onPrev}
+        onNext={onNext}
+      />
     </PageWrapper>
   );
 }
