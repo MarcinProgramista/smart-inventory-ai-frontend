@@ -76,6 +76,12 @@ export default function Suppliers() {
           setAddOpen(false);
           setEditSupplier(null);
         }}
+        onSubmit={async (payload) => {
+          console.log(payload);
+
+          setAddOpen(false);
+          setEditSupplier(null);
+        }}
       />
     </>
   );

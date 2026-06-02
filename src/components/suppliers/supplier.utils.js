@@ -40,3 +40,25 @@ export const normalizePostalCode = (value = "") => {
 
   return `${digits.slice(0, 2)}-${digits.slice(2, 5)}`;
 };
+
+const errorMap = {
+  "Supplier name": "name",
+  "City is required": "city",
+  "Invalid country code": "country",
+  "Postal code": "postal_code",
+  "Invalid contact_id": "contact_id",
+};
+
+export function mapBackendSupplierErrors(errors = []) {
+  const result = {};
+
+  errors.forEach((message) => {
+    Object.entries(errorMap).forEach(([key, field]) => {
+      if (message.includes(key)) {
+        result[field] = message;
+      }
+    });
+  });
+
+  return result;
+}
