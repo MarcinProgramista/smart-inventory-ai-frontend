@@ -68,13 +68,9 @@ export default function AddSupplierDrawer({
   };
 
   const handleSubmit = async (e) => {
-    console.log("SUBMIT");
     e.preventDefault();
 
     const validationErrors = validateSupplier(form);
-
-    console.log("FORM", form);
-    console.log("VALIDATION", validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -112,6 +108,12 @@ export default function AddSupplierDrawer({
           value={form.name}
           onChange={handleChange}
           error={errors.name}
+        />
+        <Input
+          name="city"
+          value={form.city}
+          onChange={handleChange}
+          error={errors.city}
         />
         <Footer>
           <RegisterButton
