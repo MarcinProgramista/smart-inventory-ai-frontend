@@ -111,6 +111,20 @@ export default function AddSupplierDrawer({
           placeholder="Name"
         />
         <Input
+          name="street"
+          value={form.street}
+          onChange={handleChange}
+          error={errors.street}
+          placeholder="Street"
+        />
+        <Input
+          name="postal_code"
+          value={form.postal_code}
+          onChange={handleChange}
+          error={errors.postal_code}
+          placeholder="Postal Code"
+        />
+        <Input
           name="city"
           value={form.city}
           onChange={handleChange}

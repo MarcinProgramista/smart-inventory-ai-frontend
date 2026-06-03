@@ -23,12 +23,10 @@ export function validateSupplier(form) {
     errors.country = "Country code must have 2 characters";
   }
 
-  if (form.postal_code) {
-    const postalRegex = /^\d{2}-\d{3}$/;
+  const postalRegex = /^\d{2}-\d{3}$/;
 
-    if (!postalRegex.test(form.postal_code.trim())) {
-      errors.postal_code = "Format: 00-000";
-    }
+  if (!form.postal_code || !postalRegex.test(form.postal_code.trim())) {
+    errors.postal_code = "Format: 00-000";
   }
 
   return errors;
