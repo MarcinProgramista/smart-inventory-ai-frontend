@@ -31,6 +31,7 @@ function SortIcon({ active, order }) {
   if (!active) return null;
   return order === "asc" ? <ChevronUp size={14} /> : <ChevronDown size={14} />;
 }
+
 export default function SuppliersList({
   suppliers,
   query,
@@ -48,6 +49,7 @@ export default function SuppliersList({
 }) {
   const isEmpty = suppliers.length === 0;
   const isSearching = query && query.length > 0;
+
   return (
     <PageWrapper>
       <ListHeader
@@ -74,6 +76,7 @@ export default function SuppliersList({
                   Name
                   <SortIcon active={sortBy === "name"} order={sortOrder} />
                 </Th>
+                <Th>Street</Th>
                 <Th
                   onClick={() =>
                     onSortChange("city", sortOrder === "asc" ? "desc" : "asc")
@@ -82,18 +85,10 @@ export default function SuppliersList({
                   City
                   <SortIcon active={sortBy === "city"} order={sortOrder} />
                 </Th>
-                <Th
-                  onClick={() =>
-                    onSortChange(
-                      "country",
-                      sortOrder === "asc" ? "desc" : "asc",
-                    )
-                  }
-                >
-                  Country
-                  <SortIcon active={sortBy === "country"} order={sortOrder} />
-                </Th>
+
                 <Th>Contact</Th>
+                <Th>Email</Th>
+                <Th>Phone</Th>
                 <Th>Action</Th>
               </Tr>
             </thead>
@@ -101,13 +96,16 @@ export default function SuppliersList({
               {suppliers.map((s) => (
                 <Tr key={s.id}>
                   <Td>{s.name}</Td>
-                  <Td>{s.city}</Td>
-                  <Td>{s.country}</Td>
+                  <Td>{s.street}</Td>
                   <Td>
-                    {s.first_name
-                      ? `${s.first_name} ${s.last_name} ${s.email}`
-                      : "-"}
+                    {s.country}
+                    {s.postal_code} {s.city}
                   </Td>
+                  <Td>
+                    {s.first_name ? `${s.first_name} ${s.last_name}` : "-"}
+                  </Td>
+                  <Td>{s.email ? s.email : "-"}</Td>
+                  <Td>{s.mobile_phone ? s.mobile_phone : "-"}</Td>
                   <Td>
                     <ActionButton onClick={() => onEdit(s)}>
                       <Pencil size={16} />

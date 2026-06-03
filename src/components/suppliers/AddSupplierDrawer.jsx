@@ -108,12 +108,14 @@ export default function AddSupplierDrawer({
           value={form.name}
           onChange={handleChange}
           error={errors.name}
+          placeholder="Name"
         />
         <Input
           name="city"
           value={form.city}
           onChange={handleChange}
           error={errors.city}
+          placeholder="City"
         />
         <Footer>
           <RegisterButton
