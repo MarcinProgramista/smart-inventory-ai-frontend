@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
@@ -6,6 +7,11 @@ import { mapBackendSupplierErrors, validateSupplier } from "./supplier.utils";
 import styled from "styled-components";
 import RegisterButton from "../ui/buttons/RegisterButton";
 import Input from "../common/Input";
+import useFetchContacts from "../../hooks/useFetchContacts";
+import useAuth from "../../hooks/useAuth";
+
+import Select from "react-select";
+
 const EMPTY_FORM = {
   name: "",
   street: "",
@@ -27,15 +33,27 @@ const Footer = styled.div`
   gap: 10px;
   border-top: 1px solid rgba(0, 180, 255, 0.1);
 `;
+
 export default function AddSupplierDrawer({
   open,
   onClose,
   onSubmit,
   initialData = null,
 }) {
+  const { auth } = useAuth();
+  const { contacts, fetchContacts } = useFetchContacts();
+
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  useEffect(() => {
+    if (!auth.id || !open) return;
+
+    fetchContacts(auth.id, {
+      page: 1,
+      limit: 100,
+    });
+  }, [auth.id, open]);
   useEffect(() => {
     if (initialData) {
       setForm({
@@ -130,6 +148,18 @@ export default function AddSupplierDrawer({
           onChange={handleChange}
           error={errors.city}
           placeholder="City"
+        />
+        <Select
+          options={contacts.map((c) => ({
+            value: c.id,
+            label: `${c.first_name} ${c.last_name}`,
+          }))}
+          onChange={(selected) =>
+            setForm((prev) => ({
+              ...prev,
+              contact_id: selected?.value ?? "",
+            }))
+          }
         />
         <Footer>
           <RegisterButton
