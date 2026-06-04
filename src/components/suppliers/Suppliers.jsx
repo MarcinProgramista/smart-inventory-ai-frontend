@@ -11,6 +11,7 @@ import SearchBar from "../shared/search/SearchBar";
 import SuppliersList from "./SuppliersList";
 import useSearchParamsHelpers from "../../hooks/useSearchParamsHelpers";
 import AddSupplierDrawer from "./AddSupplierDrawer";
+import { normalizeSupplierPayload } from "./supplier.utils";
 
 export default function Suppliers() {
   const { auth } = useAuth();
@@ -48,6 +49,17 @@ export default function Suppliers() {
     setSearch(value);
     setQuery(value);
   };
+  const handleDelete = async (supplier) => {
+    await deleteSupplier(supplier);
+
+    fetchSuppliers(auth.id, {
+      q: debouncedSearch,
+      page,
+      limit,
+      sort: sortBy,
+      order: sortOrder,
+    });
+  };
 
   return (
     <>
@@ -65,8 +77,8 @@ export default function Suppliers() {
         sortBy={sortBy}
         sortOrder={sortOrder}
         onSortChange={setSort}
-        onEdit={() => {}}
-        onDelete={() => {}}
+        onEdit={(c) => setEditSupplier(c)}
+        onDelete={handleDelete}
         onAdd={() => setAddOpen(true)}
       />
       <AddSupplierDrawer
@@ -77,7 +89,22 @@ export default function Suppliers() {
           setEditSupplier(null);
         }}
         onSubmit={async (payload) => {
-          console.log(payload);
+          if (editSupplier) {
+            await updateSupplier(editSupplier.id, payload);
+          } else {
+            await addSupplier({
+              ...normalizeSupplierPayload(payload),
+              user_id: Number(auth.id),
+            });
+          }
+
+          fetchSuppliers(auth.id, {
+            q: debouncedSearch,
+            page,
+            limit,
+            sort: sortBy,
+            order: sortOrder,
+          });
 
           setAddOpen(false);
           setEditSupplier(null);
