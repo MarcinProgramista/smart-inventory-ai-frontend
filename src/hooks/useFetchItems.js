@@ -1,12 +1,12 @@
-import axios from "axios";
 import API_CONFIG from "../config/api";
 import { useState } from "react";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 // useFetchItems.js
 export default function useFetchItems() {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
-
+  const axiosPrivate = useAxiosPrivate();
   const fetchItems = async (
     userId,
     {
@@ -20,7 +20,7 @@ export default function useFetchItems() {
       order = "asc",
     } = {},
   ) => {
-    const res = await axios.get(
+    const res = await axiosPrivate.get(
       `${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.ITEMS_SEARCH}`,
       {
         params: {

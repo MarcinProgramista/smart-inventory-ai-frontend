@@ -13,7 +13,7 @@ const API_CONFIG = {
     SUPPLIERS_SEARCH: "/api/suppliers/search",
 
     ITEMS: "/api/items",
-    SEARCH: "/api/items/search",
+    ITEMS_SEARCH: "/api/items/search",
   },
 };
 

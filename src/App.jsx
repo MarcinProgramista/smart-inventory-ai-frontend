@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Contacts from "./components/contacts/Contacts";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Suppliers from "./components/suppliers/Suppliers";
+import Items from "./pages/Itmes";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route element={<RequireAuth />}>
           <Route element={<DashboardLayout />}>
             <Route path="/home" element={<Home />} />
-            <Route path="/items" element={<h1>Items</h1>} />
+            <Route path="/items" element={<Items />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/suppliers" element={<Suppliers />} />
           </Route>
