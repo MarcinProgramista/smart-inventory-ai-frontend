@@ -5,18 +5,35 @@ import { useSearchParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useFetchItems from "../hooks/useFetchItems";
 import ToastContext from "../context/ToastContext";
+import useDebounce from "../hooks/useDebounce";
 
 export default function Items() {
   const { auth } = useAuth();
   const { showToast } = useContext(ToastContext);
 
   const [editingItem, setEditingItem] = useState(null);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { items, total, fetchItems } = useFetchItems(showToast);
-  const limit = 5;
   const getParam = (key, def = "") => searchParams.get(key) ?? def;
-  // 🔥 DLA FILTRÓW I SORTU → reset page
+
+  // Params from URL
+  const query = getParam("q");
+  const categoryId = getParam("category");
+  const supplierId = getParam("supplier");
+  const stock = getParam("stock");
+  const sortBy = getParam("sort", "name");
+  const sortOrder = getParam("order", "asc");
+  const page = Number(getParam("page", 1));
+
+  const [search, setSearch] = useState(query);
+  const debouncedSearch = useDebounce(search, 400);
+
+  const { items, total, fetchItems } = useFetchItems();
+
+  const limit = 5;
+
+  // DLA FILTRÓW I SORTU → reset page
   const setFilterParam = (key, value) => {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
@@ -31,7 +48,8 @@ export default function Items() {
       return next;
     });
   };
-  // 🔥 TYLKO SORT (MUSI BYĆ W JEDNYM SET)
+
+  // TYLKO SORT
   const setSortParams = (by, order) => {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
@@ -42,7 +60,7 @@ export default function Items() {
     });
   };
 
-  // 🔥 TYLKO PAGINACJA (bez resetu)
+  // TYLKO PAGINACJA
   const setPageParam = (value) => {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
@@ -50,34 +68,30 @@ export default function Items() {
       return next;
     });
   };
-  // ===============================
-  // Params from URL
-  // ===============================
-  const query = getParam("q");
-  const categoryId = getParam("category");
-  const supplierId = getParam("supplier");
-  const stock = getParam("stock");
-  const sortBy = getParam("sort", "name");
-  const sortOrder = getParam("order", "asc");
-  const page = Number(getParam("page", 1));
 
-  // ===============================
-  // FETCH
-  // ===============================
   useEffect(() => {
     if (!auth?.id) return;
 
     fetchItems(auth.id, {
       page,
       limit,
-      q: query,
+      q: debouncedSearch,
       categoryId,
       supplierId,
       stock,
       sort: sortBy,
       order: sortOrder,
     });
-  }, [auth?.id, page, query, categoryId, supplierId, stock, sortBy, sortOrder]);
+  }, [
+    auth?.id,
+    page,
+    debouncedSearch,
+    categoryId,
+    supplierId,
+    stock,
+    sortBy,
+    sortOrder,
+  ]);
 
   return <></>;
 }
