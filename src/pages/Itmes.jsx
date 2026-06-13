@@ -6,6 +6,8 @@ import useAuth from "../hooks/useAuth";
 import useFetchItems from "../hooks/useFetchItems";
 import ToastContext from "../context/ToastContext";
 import useDebounce from "../hooks/useDebounce";
+import useSearchParamsHelpers from "../hooks/useSearchParamsHelpers";
+import SearchBar from "../components/shared/search/SearchBar";
 
 export default function Items() {
   const { auth } = useAuth();
@@ -14,6 +16,8 @@ export default function Items() {
   const [editingItem, setEditingItem] = useState(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const { setQuery, setSort, setPage } =
+    useSearchParamsHelpers(setSearchParams);
 
   const getParam = (key, def = "") => searchParams.get(key) ?? def;
 
@@ -92,6 +96,19 @@ export default function Items() {
     sortBy,
     sortOrder,
   ]);
+  const handleSearchChange = (value) => {
+    setSearch(value);
+    setQuery(value);
+  };
 
-  return <></>;
+  return (
+    <>
+      <SearchBar
+        value={search}
+        onChange={handleSearchChange}
+        placeholder="Search items .."
+      />
+      <pre>{JSON.stringify(items, null, 2)}</pre>
+    </>
+  );
 }
