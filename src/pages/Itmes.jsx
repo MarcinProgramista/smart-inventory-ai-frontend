@@ -108,7 +108,6 @@ export default function Items() {
         onChange={handleSearchChange}
         placeholder="Search items .."
       />
-      <pre>{JSON.stringify(items, null, 2)}</pre>
     </>
   );
 }
