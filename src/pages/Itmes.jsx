@@ -8,6 +8,7 @@ import ToastContext from "../context/ToastContext";
 import useDebounce from "../hooks/useDebounce";
 import useSearchParamsHelpers from "../hooks/useSearchParamsHelpers";
 import SearchBar from "../components/shared/search/SearchBar";
+import ItemsList from "../components/items/ItemsList";
 
 export default function Items() {
   const { auth } = useAuth();
@@ -32,7 +33,10 @@ export default function Items() {
 
   const [search, setSearch] = useState(query);
   const debouncedSearch = useDebounce(search, 400);
+  const drawerOpen = searchParams.get("add") === "true";
 
+  const openModal = () => setSearchParams({ add: "true" });
+  const closeModal = () => setSearchParams({});
   const { items, total, fetchItems } = useFetchItems();
 
   const limit = 5;
@@ -108,6 +112,7 @@ export default function Items() {
         onChange={handleSearchChange}
         placeholder="Search items .."
       />
+      <ItemsList items={items} onAdd={openModal} />
     </>
   );
 }
