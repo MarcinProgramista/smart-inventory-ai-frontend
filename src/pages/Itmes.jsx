@@ -9,6 +9,7 @@ import useDebounce from "../hooks/useDebounce";
 import useSearchParamsHelpers from "../hooks/useSearchParamsHelpers";
 import SearchBar from "../components/shared/search/SearchBar";
 import ItemsList from "../components/items/ItemsList";
+import useItemActions from "../hooks/useItemActions";
 
 export default function Items() {
   const { auth } = useAuth();
@@ -39,6 +40,10 @@ export default function Items() {
   const closeModal = () => setSearchParams({});
   const { items, total, fetchItems } = useFetchItems();
 
+  const { addItem, editItem, deleteItem } = useItemActions({
+    closeModal,
+    showToast,
+  });
   const limit = 5;
 
   // DLA FILTRÓW I SORTU → reset page
@@ -104,7 +109,13 @@ export default function Items() {
     setSearch(value);
     setQuery(value);
   };
-
+  const stockCounts = items.reduce(
+    (acc, item) => {
+      acc[item.stock_status] = (acc[item.stock_status] || 0) + 1;
+      return acc;
+    },
+    { out: 0, low: 0, ok: 0, na: 0 },
+  );
   return (
     <>
       <SearchBar
@@ -112,7 +123,27 @@ export default function Items() {
         onChange={handleSearchChange}
         placeholder="Search items .."
       />
-      <ItemsList items={items} onAdd={openModal} />
+      <ItemsList
+        items={items}
+        onAdd={openModal}
+        query={debouncedSearch}
+        categoryId={categoryId}
+        supplierId={supplierId}
+        stock={stock}
+        page={page}
+        limit={limit}
+        total={total}
+        sortBy={sortBy}
+        sortOrder={sortOrder}
+        onQueryChange={(v) => setFilterParam("q", v)}
+        onCategoryChange={(v) => setFilterParam("category", v)}
+        onSupplierChange={(v) => setFilterParam("supplier", v)}
+        onStockChange={(v) => setFilterParam("stock", v)}
+        onSortChange={(by, ord) => setSortParams(by, ord)}
+        onPrev={() => setPageParam(page - 1)}
+        onNext={() => setPageParam(page + 1)}
+        stockCounts={stockCounts}
+      />
     </>
   );
 }
