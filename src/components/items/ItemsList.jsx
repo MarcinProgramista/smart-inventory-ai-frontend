@@ -3,9 +3,10 @@ import ListHeader from "../shared/header/ListHeader";
 import { PageWrapper } from "../shared/table/Table.styles";
 import useExportItems from "../../hooks/useExportItems";
 import Pagination from "../shared/Pagination";
-import FiltersBar from "./FiltersBar";
+
 import useCategories from "../../hooks/useCategories";
 import useSuppliers from "../../hooks/useSuppliers";
+import StockLegend from "./StockLegend";
 export default function ItemsList({
   items,
   onAdd,
@@ -39,7 +40,11 @@ export default function ItemsList({
         heading="Items"
         addTitle="Add Item"
       />
-
+      <StockLegend
+        value={stock}
+        onChange={onStockChange}
+        counts={stockCounts}
+      />
       <Pagination
         page={page}
         totalPages={Math.ceil(total / limit)}
