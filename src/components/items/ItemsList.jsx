@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import ListHeader from "../shared/header/ListHeader";
-import { PageWrapper, Table, Th, Tr } from "../shared/table/Table.styles";
+import { PageWrapper, Table, Td, Th, Tr } from "../shared/table/Table.styles";
 import useExportItems from "../../hooks/useExportItems";
 import Pagination from "../shared/Pagination";
 
@@ -69,6 +69,13 @@ export default function ItemsList({
               </Th>
             </Tr>
           </thead>
+          <tbody>
+            {items.map((item) => (
+              <Tr key={item.id}>
+                <Td>{item.name}</Td>
+              </Tr>
+            ))}
+          </tbody>
         </Table>
       </PageWrapper>
       <Pagination
